@@ -21,7 +21,7 @@
 	$NO_PLAY_CASE)
 		(( diceRolls++ ))
 		currentPosition=$(( currentPosition + 0 ))
-#		echo "Face Value = 0 NO_PLAY current position = $currentPosition"
+		echo "Face Value = 0 NO_PLAY current position = $currentPosition"
 		;;
    $LADDER_CASE)
 		(( diceRolls++ ))
@@ -32,13 +32,13 @@
 		currentPosition=$(( currentPosition - roller ))
 		fi
 
-#		echo "Face Value = $roller LADDER  current position = $currentPosition"
+		echo "Face Value = $roller LADDER  current position = $currentPosition"
 		;;
    $SNAKE_CASE)
 		(( diceRolls++ ))
 		DiceRoller
 			currentPosition=$(( currentPosition - roller ))
-#		echo "Face Value = $roller SNAKE current position = $currentPosition"
+		echo "Face Value = $roller SNAKE current position = $currentPosition"
 		;;
 	esac
 	}
