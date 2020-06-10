@@ -13,24 +13,32 @@
 	}
 
 	currentPosition=$START_POSITION
-
+	diceRolls=0
 	function gamePlaySimulation(){
 
 	optionGenerator=$((RANDOM%3))
 	case $optionGenerator in
 	$NO_PLAY_CASE)
+		(( diceRolls++ ))
 		currentPosition=$(( currentPosition + 0 ))
-		echo "Face Value = 0 NO_PLAY  position = $currentPosition"
+#		echo "Face Value = 0 NO_PLAY current position = $currentPosition"
 		;;
    $LADDER_CASE)
+		(( diceRolls++ ))
 		DiceRoller
 		currentPosition=$(( currentPosition + roller ))
-		echo "Face Value = $roller LADDER  position = $currentPosition"
+		if [ $currentPosition -gt $WIN_POSITION ]
+		then
+		currentPosition=$(( currentPosition - roller ))
+		fi
+
+#		echo "Face Value = $roller LADDER  current position = $currentPosition"
 		;;
    $SNAKE_CASE)
+		(( diceRolls++ ))
 		DiceRoller
 			currentPosition=$(( currentPosition - roller ))
-		echo "Face Value = $roller SNAKE position = $currentPosition"
+#		echo "Face Value = $roller SNAKE current position = $currentPosition"
 		;;
 	esac
 	}
@@ -46,4 +54,4 @@
 			currentPosition=$START_POSITION
 		fi
 	done
-	echo "Current Position = $currentPosition  so Reached Final"
+	echo "Current Position = $currentPosition to Reach Final"
