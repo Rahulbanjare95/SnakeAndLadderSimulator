@@ -1,23 +1,20 @@
 #!/bin/bash
 	echo "Welcome to Snake and Ladder Simulator"
-
 	read -p "Enter the number of players " MAX
-
 	read -p "Enter the Winnig Position for this Game " WIN_POSITION
 	SWITCH=1
 	START_POSITION=1
+	currentPosition=$START_POSITION
+   DICE_ROLLS=0
+
 	function DiceRoller(){
 		roller=$((RANDOM%6+1))
 	}
-
-	currentPosition=$START_POSITION
-	DICE_ROLLS=0
-	function gamePlaySimulation(){
+	function gamePlaySimulation()
+	{
    local	NO_PLAY_CASE=0
    local LADDER_CASE=1
    local SNAKE_CASE=2
-
-
 	optionGenerator=$((RANDOM%3))
 	case $optionGenerator in
 	$NO_PLAY_CASE)
@@ -37,7 +34,6 @@
 		;;
 	esac
 		}
-
 	while [ true ]
 	do
 	gamePlaySimulation
