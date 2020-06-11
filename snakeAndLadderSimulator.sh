@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 	echo "Welcome to Snake and Ladder Simulator"
 
 	read -p "Enter the Max number of players " MAX
@@ -57,21 +57,20 @@
 		fi
 	done
 	echo "Current Position = $currentPosition to Reach Final"
-
+	echo "dice Rolls to Win $diceRolls "
 
 
 	for (( playerNo=1; playerNo<=$MAX; playerNo++ ))
 	do
 		if [ $((SWITCH%$MAX)) -eq $playerNo ]
 			then
+			(( SWITCH++ ))
 				gamePlaySimulation
 				if [ $currentPosition -eq $WIN_POSITION ]
 					then
 						echo "PLayer $playerNo won "
 						break
 				fi
-		else
-			(( SWITCH++ ))
 		fi
 	done
 
