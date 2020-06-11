@@ -5,49 +5,47 @@
 
 	read -p "Enter the Winnig Position for this Game " WIN_POSITION
 	SWITCH=1
-	START_POSITION=0
-	NO_PLAY_CASE=0
-	LADDER_CASE=1
-	SNAKE_CASE=2
+	START_POSITION=1
 	function DiceRoller(){
 		roller=$((RANDOM%6+1))
 	}
 
 	currentPosition=$START_POSITION
-	diceRolls=0
+	DICE_ROLLS=0
 	function gamePlaySimulation(){
+	NO_PLAY_CASE=0
+   LADDER_CASE=1
+   SNAKE_CASE=2
+
 
 	optionGenerator=$((RANDOM%3))
 	case $optionGenerator in
 	$NO_PLAY_CASE)
-		(( diceRolls++ ))
+		(( DICE_ROLLS++ ))
 		currentPosition=$(( currentPosition + 0 ))
-		echo "Face Value = 0 NO_PLAY current position = $currentPosition"
 		;;
    $LADDER_CASE)
-		(( diceRolls++ ))
+		(( DICE_ROLLS++ ))
 		DiceRoller
 		currentPosition=$(( currentPosition + roller ))
 		if [ $currentPosition -gt $WIN_POSITION ]
 		then
 		currentPosition=$(( currentPosition - roller ))
 		fi
-
-		echo "Face Value = $roller LADDER  current position = $currentPosition"
 		;;
    $SNAKE_CASE)
-		(( diceRolls++ ))
+		(( DICE_ROLLS++ ))
 		DiceRoller
 			currentPosition=$(( currentPosition - roller ))
-		echo "Face Value = $roller SNAKE current position = $currentPosition"
 		;;
 	esac
-	}
-
+		}
 
 	while [ true ]
 	do
 	gamePlaySimulation
+	(( DICE_ROLLS++ ))
+	 echo "Face Value = $roller current position = $currentPosition"
 		if [ $currentPosition -eq $WIN_POSITION ]
 		then
 			break
@@ -56,19 +54,19 @@
 			currentPosition=$START_POSITION
 		fi
 	done
-	echo "Current Position = $currentPosition to Reach Final"
-	echo "dice Rolls to Win $diceRolls "
+	echo "Current Position = $currentPosition  Reached Final"
+	echo "total dice Rolls $DICE_ROLLS "
 
 
 	for (( playerNo=1; playerNo<=$MAX; playerNo++ ))
 	do
-		if [ $((SWITCH%$MAX)) -eq $playerNo ]
+		if [ $((SWITCH%$MAX)) -eq $playerNo  ]
 			then
 			(( SWITCH++ ))
 				gamePlaySimulation
 				if [ $currentPosition -eq $WIN_POSITION ]
 					then
-						echo "PLayer $playerNo won "
+						echo $playerNo " won"
 						break
 				fi
 		fi
