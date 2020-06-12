@@ -2,14 +2,10 @@
 	echo "Welcome to Snake and Ladder Simulator"
 	read -p " Enter the number of player" MAX
 	read -p "Enter the Winnig Position for this Game " WIN_POSITION
-
-	PLAYER_ONE=0
-	PLAYER_TWO=1
 	START_POSITION=1
 	NO_PLAY_CASE=0
    LADDER_CASE=1
    SNAKE_CASE=2
-	SWITCH=1
 	currentPosition=$START_POSITION
    diceRollCount=0
 
@@ -38,7 +34,6 @@
 		esac
 		echo $currentPosition
 	}
-
 
 	function finalPosition() {
 			gamePlaySimulation
