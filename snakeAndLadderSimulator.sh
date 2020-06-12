@@ -1,6 +1,8 @@
 #!/bin/bash -x
 	echo "Welcome to Snake and Ladder Simulator"
+	read -p " Enter the number of player" MAX
 	read -p "Enter the Winnig Position for this Game " WIN_POSITION
+
 	PLAYER_ONE=0
 	PLAYER_TWO=1
 	START_POSITION=1
@@ -49,34 +51,23 @@
 			fi
 	}
 
-	function winner(){
-		while ( true )
-		do
-			if [ $((SWITCH%2)) -eq $PLAYER_ONE ]
+
+	function winner()
+	{
+	 for (( playerNo=1; playerNo<=$MAX; playerNo++ ))
+	 	do
+			finalPosition
+			if [ $((SWITCH%$MAX)) -eq $playerNo ]
 			then
-				finalPosition
 				if [ $currentPosition -eq $WIN_POSITION ]
-				then
-					echo "1 won"
-					break
-				fi
-			fi
-			((SWITCH++))
-
-			if [ $((SWITCH%2)) -eq $PLAYER_TWO ]
-				then
-					finalPosition
-					if [ $currentPosition -eq $WIN_POSITION ]
 					then
-						echo "2 won"
+						echo "PLayer $playerNo won "
 						break
-					fi
+				fi
+
 			fi
-	done
+	 	done
 	}
-
 	winner
-
-
 
 
