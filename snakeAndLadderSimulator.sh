@@ -1,67 +1,82 @@
-#!/bin/bash
+#!/bin/bash -x
 	echo "Welcome to Snake and Ladder Simulator"
-	read -p "Enter the number of players " MAX
 	read -p "Enter the Winnig Position for this Game " WIN_POSITION
-	SWITCH=1
+	PLAYER_ONE=0
+	PLAYER_TWO=1
 	START_POSITION=1
+	NO_PLAY_CASE=0
+   LADDER_CASE=1
+   SNAKE_CASE=2
+	SWITCH=1
 	currentPosition=$START_POSITION
-   DICE_ROLLS=0
+   diceRollCount=0
 
-	function DiceRoller(){
+	function diceFaceValue(){
 		roller=$((RANDOM%6+1))
 	}
+
 	function gamePlaySimulation()
 	{
-   local	NO_PLAY_CASE=0
-   local LADDER_CASE=1
-   local SNAKE_CASE=2
-	optionGenerator=$((RANDOM%3))
-	case $optionGenerator in
-	$NO_PLAY_CASE)
-		currentPosition=$(( currentPosition + 0 ))
-		;;
-   $LADDER_CASE)
-		DiceRoller
-		currentPosition=$(( currentPosition + roller ))
-		if [ $currentPosition -gt $WIN_POSITION ]
-		then
-		currentPosition=$(( currentPosition - roller ))
-		fi
-		;;
-   $SNAKE_CASE)
-		DiceRoller
-			currentPosition=$(( currentPosition - roller ))
-		;;
-	esac
-		}
-	while [ true ]
-	do
-	gamePlaySimulation
-	(( DICE_ROLLS++ ))
-	 echo "Face Value = $roller current position = $currentPosition"
-		if [ $currentPosition -eq $WIN_POSITION ]
-		then
-			break
-		elif [ $currentPosition -lt $START_POSITION ]
-		then
-			currentPosition=$START_POSITION
-		fi
-	done
-	echo "Current Position = $currentPosition  Reached Final"
-	echo "total dice Rolls $DICE_ROLLS "
+		diceFaceValue
+		playCaseGenerator=$((RANDOM%3))
+		case $playCaseGenerator in
+				$NO_PLAY_CASE)
+						currentPosition=$(( currentPosition + 0 ))
+						;;
+   			$LADDER_CASE)
+						currentPosition=$(( currentPosition + roller ))
+							if [ $currentPosition -gt $WIN_POSITION ]
+								then
+									currentPosition=$(( currentPosition - roller ))
+							fi
+						;;
+   			$SNAKE_CASE)
+						currentPosition=$(( currentPosition - roller ))
+						;;
+		esac
+		echo $currentPosition
+	}
 
+	function finalPosition() {
+			gamePlaySimulation
+			(( diceRollCount++ ))
+			if [ $currentPosition -eq $WIN_POSITION ]
+				then
+					echo "$currentPosition"
+			elif [ $currentPosition -lt $START_POSITION ]
+				then
+					currentPosition=$START_POSITION
+			fi
+	}
 
-	for (( playerNo=1; playerNo<=$MAX; playerNo++ ))
-	do
-		if [ $((SWITCH%$MAX)) -eq $playerNo  ]
+	function winner(){
+		while ( true )
+		do
+			if [ $((SWITCH%2)) -eq $PLAYER_ONE ]
 			then
-			(( SWITCH++ ))
-				gamePlaySimulation
+				finalPosition
 				if [ $currentPosition -eq $WIN_POSITION ]
-					then
-						echo $playerNo " won"
-						break
+				then
+					echo "1 won"
+					break
 				fi
-		fi
+			fi
+			((SWITCH++))
+
+			if [ $((SWITCH%2)) -eq $PLAYER_TWO ]
+				then
+					finalPosition
+					if [ $currentPosition -eq $WIN_POSITION ]
+					then
+						echo "2 won"
+						break
+					fi
+			fi
 	done
+	}
+
+	winner
+
+
+
 
