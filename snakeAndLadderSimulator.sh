@@ -21,18 +21,18 @@
 		playCaseGenerator=$((RANDOM%3))
 		case $playCaseGenerator in
 				$NO_PLAY_CASE)
-						currentPosition=$(( currentPosition + 0 ))
-						;;
+					currentPosition=$(( currentPosition + 0 ))
+					;;
    			$LADDER_CASE)
-						currentPosition=$(( currentPosition + roller ))
-							if [ $currentPosition -gt $WIN_POSITION ]
-								then
-									currentPosition=$(( currentPosition - roller ))
-							fi
-						;;
+					currentPosition=$(( currentPosition + roller ))
+					if [ $currentPosition -gt $WIN_POSITION ]
+					then
+						currentPosition=$(( currentPosition - roller ))
+					fi
+					;;
    			$SNAKE_CASE)
 						currentPosition=$(( currentPosition - roller ))
-						;;
+					;;
 		esac
 		echo $currentPosition
 	}
