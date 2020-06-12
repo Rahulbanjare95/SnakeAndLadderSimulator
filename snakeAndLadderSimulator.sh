@@ -39,6 +39,7 @@
 		echo $currentPosition
 	}
 
+
 	function finalPosition() {
 			gamePlaySimulation
 			(( diceRollCount++ ))
@@ -51,23 +52,28 @@
 			fi
 	}
 
-
 	function winner()
 	{
+	counter=1
+	while [ $counter -eq 1 ]
+	do
 	 for (( playerNo=1; playerNo<=$MAX; playerNo++ ))
 	 	do
-			finalPosition
-			if [ $((SWITCH%$MAX)) -eq $playerNo ]
-			then
-				if [ $currentPosition -eq $WIN_POSITION ]
+			playerArray[$playerNo]=$START_POSITION
+			finalPosition ${playerArray[$playerNo]}
+			playerArray[$playerNo]=$currentPosition
+
+				if [ ${playerArray[$playerNo]} -eq $WIN_POSITION ]
 					then
-						echo "PLayer $playerNo won "
+						counter=0
+						echo " $playerNo won "
 						break
 				fi
-
-			fi
 	 	done
+	done
 	}
+
+	echo "Total Dice Rolls = $diceRollCount "
 	winner
 
 
