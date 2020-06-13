@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 	echo "Welcome to Snake and Ladder Simulator"
 	read -p " Enter the number of player" MAX
 	read -p "Enter the Winnig Position for this Game " WIN_POSITION
@@ -29,21 +29,28 @@
 					fi
 					;;
    			$SNAKE_CASE)
-						currentPosition=$(( currentPosition - roller ))
+					currentPosition=$(( currentPosition - roller ))
+					if [ $currentPosition -lt $START_POSITION ]
+					then
+						currentPosition=$(($currentPosition + roller ))
+					fi
 					;;
 		esac
 		echo $currentPosition
 	}
 
-	function finalPosition() {
+	function finalPosition()
+	{
 			gamePlaySimulation
+
 			(( diceRollCount++ ))
 			if [ $currentPosition -eq $WIN_POSITION ]
 				then
-					echo "$currentPosition"
+						echo  "Reached $currentPosition"
 			elif [ $currentPosition -lt $START_POSITION ]
 				then
 					currentPosition=$START_POSITION
+					echo $currentPosition
 			fi
 	}
 
@@ -55,13 +62,13 @@
 	 for (( playerNo=1; playerNo<=$MAX; playerNo++ ))
 	 	do
 			playerArray[$playerNo]=$START_POSITION
+			echo "Playing $playerNo"
 			finalPosition ${playerArray[$playerNo]}
 			playerArray[$playerNo]=$currentPosition
-
 				if [ ${playerArray[$playerNo]} -eq $WIN_POSITION ]
 					then
-						counter=0
 						echo " $playerNo won "
+						counter=0
 						break
 				fi
 	 	done
