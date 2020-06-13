@@ -42,7 +42,6 @@
 	function finalPosition()
 	{
 			gamePlaySimulation
-
 			(( diceRollCount++ ))
 			if [ $currentPosition -eq $WIN_POSITION ]
 				then
@@ -50,8 +49,8 @@
 			elif [ $currentPosition -lt $START_POSITION ]
 				then
 					currentPosition=$START_POSITION
-					echo $currentPosition
 			fi
+			echo  "Total rolls to win "$diceRollCount
 	}
 
 	function winner()
@@ -74,8 +73,5 @@
 	 	done
 	done
 	}
-
-	echo "Total Dice Rolls = $diceRollCount "
+	finalPosition
 	winner
-
-
